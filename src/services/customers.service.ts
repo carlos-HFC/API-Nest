@@ -1,6 +1,5 @@
-import { Injectable } from "@nestjs/common";
+import { HttpException, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
-import sequelize from "sequelize";
 
 import { Cities, Customers } from "../models";
 
@@ -29,13 +28,19 @@ export class CustomersService {
       return await this.customers.create(customers)
    }
 
-   async update(id: number, name: string): Promise<Customers> {
+   async update(id: number, body: Customers): Promise<Customers> {
       const customer = await this.customers.findByPk(id)
-      return await customer.update({ name })
+
+      if (!customer) throw new HttpException("Esse id não existe", 404)
+
+      return await customer.update({ name: body.name })
    }
 
    async delete(id: number): Promise<void> {
       const customer = await this.customers.findByPk(id)
-      return await customer.destroy()
+
+      if (!customer) throw new HttpException("Esse id não existe", 404)
+
+      await customer.destroy()
    }
 }

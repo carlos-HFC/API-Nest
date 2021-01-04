@@ -27,8 +27,8 @@ export class CustomersController {
    }
 
    @Put(':id')
-   async update(@Param('id') id: number, @Body() name: string) {
-      return await this.customers.update(id, name)
+   async update(@Param('id') id: number, @Body() body: Customers) {
+      return await this.customers.update(id, body)
    }
 
    @Delete(':id')
