@@ -3,7 +3,6 @@ import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/
 import { Customers } from '../models'
 import { CustomersService } from '../services'
 
-
 @Controller('customers')
 export class CustomersController {
    constructor(
